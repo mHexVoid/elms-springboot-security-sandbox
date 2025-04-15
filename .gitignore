@@ -57,3 +57,43 @@ Thumbs.db
 # Windows Installer logs
 *.cab
 *.msi
+
+# Maven Wrapper
+mvnw
+mvn
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Build and target directories
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.gitattributes
+
+# VS Code
+.vscode/
+
+# IntelliJ IDEA files
+.idea
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+/nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
