@@ -8,9 +8,10 @@ This repository showcases **progressive security implementations** — from basi
 
 
 
-![Java](https://img.shields.io/badge/Java-17-blue)
-![Spring Boot](https://img.shields.io/badge/SpringBoot-3.0-green)
-![Security](https://img.shields.io/badge/Security-Custom%20JWT-red)
+![Java](https://img.shields.io/badge/Java-17-blue?logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.3-brightgreen?logo=springboot)
+![JWT](https://img.shields.io/badge/JWT-Security-orange?logo=jsonwebtokens)
+![Maven](https://img.shields.io/badge/Maven-Build-blue?logo=apachemaven)
 
 
 ---
@@ -31,10 +32,9 @@ This repository showcases **progressive security implementations** — from basi
 
 ### 🧪 Concept Module
 
-| Project Folder | Description |
-|----------------|-------------|
-| `01_springboot_jpa_one_to_many_eager_couse_init` | A basic JPA setup demonstrating one-to-many eager fetch behavior. |
-
+| Project Folder                            | Description |
+|------------------------------------------|-------------|
+| `01_jpa-entity-associations-eager-fetch` | JPA association demo in a hospital domain using Doctor, Clinic, and Appointment entities. Demonstrates eager fetch, DTO abstraction, bidirectional mapping, and JSON serialization patterns. |
 
 ### 🏗️ Core Foundation Modules
 
