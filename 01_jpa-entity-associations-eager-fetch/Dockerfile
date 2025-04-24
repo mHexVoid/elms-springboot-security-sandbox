@@ -10,6 +10,7 @@ COPY . .
 RUN apk add --no-cache maven
 
 # Run Spring Boot app (using plugin)
+
 EXPOSE 8080
 
 CMD ["mvn", "spring-boot:run"]
