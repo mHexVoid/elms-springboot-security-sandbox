@@ -10,4 +10,5 @@ COPY . .
 RUN apk add --no-cache maven
 
 # Run Spring Boot app (using plugin)
+
 CMD ["mvn", "spring-boot:run"]
