@@ -261,8 +261,8 @@ mvn spring-boot:run
 ```
 
 ### 🌐 Access APIs:
-- Swagger UI: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)  
-- H2 Console: [http://localhost:8081/h2-console](http://localhost:8081/h2-console)  
+- Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)  
+- H2 Console: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)  
   - JDBC URL: `jdbc:h2:mem:doctor_db`  
   - Username: `sa`  
   - Password: *(leave blank)*
