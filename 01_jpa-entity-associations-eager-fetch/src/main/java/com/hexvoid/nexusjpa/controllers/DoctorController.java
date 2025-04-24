@@ -27,86 +27,94 @@ import com.hexvoid.nexusjpa.entity.Doctor;
  * Base URL: /api/clinic
  */
 @RestController
-@RequestMapping("/api/clinic")
+@RequestMapping("/api/doctors")
 public class DoctorController {
 
-    private final DoctorDAO doctorDAO;
+	private final DoctorDAO doctorDAO;
 
-    // Constructor-based dependency injection of DoctorDAO
-    public DoctorController(DoctorDAO doctorDAO) {
-        this.doctorDAO = doctorDAO;
-    }
+	// Constructor-based dependency injection of DoctorDAO
+	public DoctorController(DoctorDAO doctorDAO) {
+		this.doctorDAO = doctorDAO;
+	}
 
-    /**
-     * Saves a doctor including nested clinic and appointment data.
-     * <p>
-     * This method maps the incoming {@link DoctorRequestDto} to a {@link Doctor} entity
-     * and persists it using the DAO layer.
-     *
-     * @param doctorDto the doctor details from request body
-     * @return the saved {@link Doctor} entity
-     */
-    @PostMapping("/save/doctor")
-    public Doctor saveDoctor(@RequestBody DoctorRequestDto doctorDto) {
-        System.out.println("Received Doctor: " + doctorDto.toString());
-        System.out.println("Clinic: " + doctorDto.getClinic().toString());
-        System.out.println("Appointments: " + doctorDto.getAppointments().toString());
-        
-        Doctor doctor = DoctorMapper.toEntity(doctorDto);
-        Doctor savedDoctor = doctorDAO.saveDoctor(doctor);
+	/**
+	 * Test endpoint to check if controller is up.
+	 */
+	@GetMapping("/ping")
+	public ResponseEntity<String> ping() {
+		return ResponseEntity.ok("DoctorController is up and running!");
+	}
 
-        System.out.println("Saved Doctor: " + savedDoctor);
-        return savedDoctor;
-    }
+	/**
+	 * Saves a doctor including nested clinic and appointment data.
+	 * <p>
+	 * This method maps the incoming {@link DoctorRequestDto} to a {@link Doctor} entity
+	 * and persists it using the DAO layer.
+	 *
+	 * @param doctorDto the doctor details from request body
+	 * @return the saved {@link Doctor} entity
+	 */
+	@PostMapping
+	public Doctor saveDoctor(@RequestBody DoctorRequestDto doctorDto) {
+		System.out.println("Received Doctor: " + doctorDto.toString());
+		System.out.println("Clinic: " + doctorDto.getClinic().toString());
+		System.out.println("Appointments: " + doctorDto.getAppointments().toString());
 
-    /**
-     * Saves a doctor using {@link ResponseEntity} to wrap the response.
-     * <p>
-     * Returns 201 CREATED status upon successful creation.
-     *
-     * @param doctorDto the doctor details from request
-     * @return response entity containing the saved doctor
-     */
-    @PostMapping("/save/doctor/response")
-    public ResponseEntity<Doctor> saveDoctorResponse(@RequestBody DoctorRequestDto doctorDto) {
-    	Doctor doctor = DoctorMapper.toEntity(doctorDto);
-    	Doctor saved = doctorDAO.saveDoctor(doctor);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
-    }
+		Doctor doctor = DoctorMapper.toEntity(doctorDto);
+		Doctor savedDoctor = doctorDAO.saveDoctor(doctor);
 
-    /**
-     * Retrieves a doctor with their associated appointments by doctor ID.
-     * <p>
-     * Uses {@link DoctorRequestDto} to return readable data with clinic and appointments.
-     *
-     * @param id the doctor ID
-     * @return doctor data as {@link DoctorDto}
-     */
-    @GetMapping("/get/doctor/withappointments/{id}")
-    public ResponseEntity<DoctorRequestDto> findDoctorWithAppointments(@PathVariable int id) {
-       Doctor doctor = doctorDAO.findDoctorWithAppointments(id);
-       DoctorRequestDto dto = DoctorMapper.toDto(doctor);
-       return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-    
-    /**
-     * Retrieves a doctor in a response-specific DTO format including IDs.
-     * <p>
-     * This is ideal for frontend/UI consumption where unique identifiers are necessary.
-     *
-     * @param id the doctor ID
-     * @return the {@link DoctorResponseDto} wrapped in a response entity
-     */
-    @GetMapping("/get/doctor/with/response/dto/{id}")
-    public ResponseEntity<DoctorResponseDto> findDoctorByIdHavingAppointMents(@PathVariable int id){
-    	Doctor doctor = doctorDAO.findDoctorWithAppointments(id);
-    	
-        // NOTE: Consider refactoring to make toDoctorResponseDto() static for consistency.
-    	DoctorMapper invokeTheNonStaticMethodWithRef = new DoctorMapper();
-    	DoctorResponseDto responseDto = invokeTheNonStaticMethodWithRef.toDoctorResponseDto(doctor);
-    	
-    	return ResponseEntity.ok(responseDto);
-    	
-    }
-    
+		System.out.println("Saved Doctor: " + savedDoctor);
+		return savedDoctor;
+	}
+
+	/**
+	 * Saves a doctor using {@link ResponseEntity} to wrap the response.
+	 * <p>
+	 * Returns 201 CREATED status upon successful creation.
+	 *
+	 * @param doctorDto the doctor details from request
+	 * @return response entity containing the saved doctor
+	 */
+	@PostMapping("/with-response")
+	public ResponseEntity<Doctor> saveDoctorResponse(@RequestBody DoctorRequestDto doctorDto) {
+		Doctor doctor = DoctorMapper.toEntity(doctorDto);
+		Doctor saved = doctorDAO.saveDoctor(doctor);
+		return new ResponseEntity<>(saved, HttpStatus.CREATED);
+	}
+
+	/**
+	 * Retrieves a doctor with their associated appointments by doctor ID.
+	 * <p>
+	 * Uses {@link DoctorRequestDto} to return readable data with clinic and appointments.
+	 *
+	 * @param id the doctor ID
+	 * @return doctor data as {@link DoctorDto}
+	 */
+	@GetMapping("/{doctorId}/details")
+	public ResponseEntity<DoctorRequestDto> findDoctorWithAppointments(@PathVariable int doctorId) {
+		Doctor doctor = doctorDAO.findDoctorWithAppointments(doctorId);
+		DoctorRequestDto dto = DoctorMapper.toDto(doctor);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+
+	/**
+	 * Retrieves a doctor in a response-specific DTO format including IDs.
+	 * <p>
+	 * This is ideal for frontend/UI consumption where unique identifiers are necessary.
+	 *
+	 * @param id the doctor ID
+	 * @return the {@link DoctorResponseDto} wrapped in a response entity
+	 */
+	@GetMapping("/{doctorId}/response")
+	public ResponseEntity<DoctorResponseDto> findDoctorByIdHavingAppointMents(@PathVariable int doctorId){
+		Doctor doctor = doctorDAO.findDoctorWithAppointments(doctorId);
+
+		// NOTE: Consider refactoring to make toDoctorResponseDto() static for consistency.
+		DoctorMapper invokeTheNonStaticMethodWithRef = new DoctorMapper();
+		DoctorResponseDto responseDto = invokeTheNonStaticMethodWithRef.toDoctorResponseDto(doctor);
+
+		return ResponseEntity.ok(responseDto);
+
+	}
+
 }
