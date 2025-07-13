@@ -1,8 +1,10 @@
 package com.hexvoid.employeeportal.controller;
 
+
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.hexvoid.employeeportal.entity.Employees;
@@ -114,7 +116,7 @@ public class EmployeeController {
      * @param id The ID of the employee to retrieve.
      * @return The employee details corresponding to the given ID.
      */
-    @GetMapping(value = "/employees/{id}")
+    @GetMapping(value = "/employees/{id}", produces = {  MediaType.APPLICATION_XML_VALUE , MediaType.APPLICATION_JSON_VALUE})
     public Employees getEmployeeById(@PathVariable int id) {
         logger.info("Fetching employee with ID: {}", id);
         return theEmployeeServiceMethod.findById(id);
