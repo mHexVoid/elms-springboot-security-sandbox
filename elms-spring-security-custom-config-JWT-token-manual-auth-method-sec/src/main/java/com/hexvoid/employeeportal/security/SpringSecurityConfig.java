@@ -166,8 +166,8 @@ public class SpringSecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
 				// H2 Console (if enabled during development)
-				// .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
-				// .requestMatchers("/h2-console", "/h2-console/**").permitAll() //For Post API and get both while providing credentials to UI
+				.requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
+				.requestMatchers("/h2-console", "/h2-console/**").permitAll() //For Post API and get both while providing credentials to UI
 
 
 				// Authenticated Endpoints
@@ -237,7 +237,7 @@ public class SpringSecurityConfig {
 		http.formLogin(form -> form.disable());
 		http.httpBasic(Customizer.withDefaults());
 
-		//http.headers(t -> t.frameOptions(v ->v.sameOrigin()));
+		http.headers(t -> t.frameOptions(v ->v.sameOrigin()));
 
 		// Return the configured security filter chain.
 		return http.build();
